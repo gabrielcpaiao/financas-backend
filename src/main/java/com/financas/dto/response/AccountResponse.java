@@ -9,6 +9,6 @@ public record AccountResponse(
         String name,
         AccountType type,
         BigDecimal initialBalance,
-        Boolean active
+        boolean active
 ) {
 }

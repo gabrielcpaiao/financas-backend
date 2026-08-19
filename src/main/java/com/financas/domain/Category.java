@@ -43,7 +43,7 @@ public class Category {
     private Long parentId;
 
     @Column(nullable = false)
-    private Boolean active;
+    private boolean active;
 
     @Column(name = "created_at", updatable = false, insertable = false)
     private LocalDateTime createdAt;
