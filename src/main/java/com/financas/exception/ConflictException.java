@@ -34,4 +34,15 @@ public class ConflictException extends RuntimeException {
                 "name"
         );
     }
+
+    public static ConflictException duplicateCreditCardName(String name) {
+        return new ConflictException(
+                String.format(
+                        "Já existe um cartão de crédito com o nome '%s'",
+                        name
+                ),
+                "DUPLICATE_CREDIT_CARD_NAME",
+                "name"
+        );
+    }
 }

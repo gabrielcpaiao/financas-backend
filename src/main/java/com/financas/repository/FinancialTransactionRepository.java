@@ -4,6 +4,7 @@ import com.financas.domain.FinancialTransaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import java.math.BigDecimal;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,4 +35,17 @@ public interface FinancialTransactionRepository extends JpaRepository<FinancialT
     MonthlySummaryProjection findMonthlySummary(@Param("userId") Long userId,
                                                 @Param("monthStart") LocalDate monthStart,
                                                 @Param("monthEnd") LocalDate monthEnd);
+
+    @Query("""
+            SELECT COALESCE(SUM(t.amount), 0)
+            FROM FinancialTransaction t
+            WHERE t.userId = :userId
+              AND t.categoryId = :categoryId
+              AND t.transactionDate >= :from
+              AND t.transactionDate <= :to
+            """)
+    BigDecimal sumAmountByCategoryAndPeriod(@Param("userId") Long userId,
+                                            @Param("categoryId") Long categoryId,
+                                            @Param("from") LocalDate from,
+                                            @Param("to") LocalDate to);
 }
